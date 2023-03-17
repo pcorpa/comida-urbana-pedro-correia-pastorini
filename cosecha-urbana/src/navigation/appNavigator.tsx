@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as React from "react";
-import { HomeScreen, LoginScreen, AddTreeScreen } from "../screens/index";
+import { useState } from "react";
+import { BottomTabs } from "./bottomTabs";
 import { HomeStack } from "./home";
 
 export type RootStackParamList = {
@@ -9,14 +9,16 @@ export type RootStackParamList = {
   HomeScreen: undefined;
   AddTreeScreen: undefined;
   MyPlantScreen: undefined;
+  ProfileScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppStack() {
+  const [user, setUser] = useState(false);
   return (
     <NavigationContainer>
-      <HomeStack />
+      <BottomTabs />
     </NavigationContainer>
   );
 }

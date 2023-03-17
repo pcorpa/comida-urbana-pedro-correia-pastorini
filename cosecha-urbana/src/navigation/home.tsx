@@ -11,7 +11,7 @@ import {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export const HomeStack = () => {
+export function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -23,16 +23,6 @@ export const HomeStack = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="AddTreeScreen"
-        component={AddPlantScreen}
-        options={{ headerShown: true }}
-      />
-      <Stack.Screen
-        name="MyPlantScreen"
-        component={MyPlantScreen}
-        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );
