@@ -11,11 +11,11 @@ import { COLOR } from "../constants";
 
 interface Props extends PressableProps {
   children: string;
-  
+  pressableStyle?: {}
 }
-export const LargeButton = ({ children: title, onPress }: Props) => {
+export const LargeButton = ({ children: title, onPress, pressableStyle }: Props) => {
   return (
-    <Pressable onPress={onPress} style={styles.button}>
+    <Pressable onPress={onPress} style={[styles.button, pressableStyle]}>
       <Text style={styles.buttonText}>{title}</Text>
     </Pressable>
   );

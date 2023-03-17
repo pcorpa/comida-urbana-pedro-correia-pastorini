@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 export function BottomTabs() {
   return (
     <Tab.Navigator
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -113,7 +114,7 @@ export function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="AddTreeTab"
+        name="AddPlantScreen"
         component={AddPlantScreen}
         options={{
           headerShown: false,
