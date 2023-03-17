@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Image, StyleSheet, SafeAreaView, Platform } from "react-native";
 import React, { useState } from "react";
 import { RootStackParamList } from "../navigation/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -15,7 +15,27 @@ export const HomeScreen = ({ navigation: { navigate } }: Props) => {
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+      <MapView
+        style={styles.map}
+        initialCamera={Platform.OS === "ios" ? {
+          center: {
+            latitude: -34.895085,
+            longitude: -56.155803,
+          },
+          pitch: 0,
+          heading: 0,
+          altitude: 2000,
+          
+        } : {
+          center: {
+            latitude: -34.895085,
+            longitude: -56.155803,
+          },
+          pitch: 9000,
+          heading: 100,
+          zoom: 2000,
+        } }
+      />
       <View style={styles.searchBar}>
         <StyledTextInput
           viewStyle={styles.searchBarInput}
@@ -37,10 +57,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.fondo,
   },
   map: {
-    flex: 1,
     width: widthPixel(390),
-    height: heightPixel(840),
-    borderRadius: widthPixel(30),
+    height: heightPixel(890),
   },
   searchBar: {
     position: "absolute",
