@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { RootStackParamList } from "../navigation/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -13,7 +13,9 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
   return (
     <View style={styles.container}>
       <SafeAreaView />
-      <Text>Profile Screen</Text>
+      <Pressable onPress={() => navigate("LoginScreen")}>
+        <Text>Profile Screen</Text>
+      </Pressable>
     </View>
   );
 }

@@ -7,7 +7,7 @@ import { HomeStack } from "./home";
 export type RootStackParamList = {
   LoginScreen: undefined;
   HomeScreen: undefined;
-  AddTreeScreen: undefined;
+  AddPlantScreen: undefined;
   MyPlantScreen: undefined;
   ProfileScreen: undefined;
 };
@@ -18,7 +18,7 @@ function AppStack() {
   const [user, setUser] = useState(false);
   return (
     <NavigationContainer>
-      <BottomTabs />
+      <HomeStack/>
     </NavigationContainer>
   );
 }

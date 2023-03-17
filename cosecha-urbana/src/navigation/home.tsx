@@ -8,12 +8,13 @@ import {
   LoginScreen,
   MyPlantScreen,
 } from "../screens";
+import { BottomTabs } from "./bottomTabs";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -21,9 +22,10 @@ export function HomeStack() {
       />
       <Stack.Screen
         name="HomeScreen"
-        component={HomeScreen}
+        component={BottomTabs}
         options={{ headerShown: false }}
       />
+     
     </Stack.Navigator>
   );
 };

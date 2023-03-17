@@ -36,7 +36,7 @@ export const LoginScreen = ({ navigation: { navigate } }: Props) => {
         <LargeButton onPress={() => navigate("HomeScreen")}>
           Ingresar
         </LargeButton>
-        <LargeButton onPress={() => navigate("AddTreeScreen")}>
+        <LargeButton onPress={() => navigate("AddPlantScreen")}>
           Registrarse
         </LargeButton>
         <LargeButton onPress={() => navigate("MyPlantScreen")}>
