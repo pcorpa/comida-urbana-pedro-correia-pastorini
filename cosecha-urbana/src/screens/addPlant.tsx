@@ -4,7 +4,7 @@ import { LargeButton, SearchBar, StyledTextInput } from "../components";
 import { COLOR } from "../constants";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { ADD_PLANT, Plant } from "../redux/types";
+import { ADD_PLANT, Plant, REMOVE_PLANT } from "../redux/types";
 import { initialState } from "../redux/reducers/plants.reducer";
 import { RootState } from "../redux/reducers";
 

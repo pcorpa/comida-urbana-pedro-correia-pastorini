@@ -12,8 +12,7 @@ export function plantReducer(state: Plant[] = initialState, action: PlantActionT
         return([...state,action.payload ]);
       break
       case REMOVE_PLANT: 
-        const newState = state.filter((s)=> s.id != action.payload.id)
-        return (newState);
+        return state.filter((s)=> s.id != action.payload.id)
       break
       default:
         return state
