@@ -7,7 +7,7 @@ import {
   Text,
 } from "react-native";
 import React, { useState } from "react";
-import { RootStackParamList } from "../navigation/appNavigator";
+import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { COLOR } from "../constants/index";
 import {

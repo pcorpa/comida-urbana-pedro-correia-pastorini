@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import React, { useState } from "react";
-import { RootStackParamList } from "../navigation/appNavigator";
+import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LargeButton, StyledTextInput } from "../components/index";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
@@ -39,7 +39,6 @@ export const LoginScreen = ({ navigation: { navigate } }: Props) => {
         <LargeButton onPress={() => navigate("AddPlantScreen")}>
           Registrarse
         </LargeButton>
-       
       </View>
     </View>
   );

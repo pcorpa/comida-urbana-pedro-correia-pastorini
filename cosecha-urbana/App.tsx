@@ -1,10 +1,12 @@
-import AppStack from "./src/navigation/appNavigator";
+import AppStack from "./src/navigators/appNavigator";
 import { ActivityIndicator } from "react-native";
 import { useFonts } from "expo-font";
 import { hideAsync } from "expo-splash-screen";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { Provider } from "react-redux";
+import store from "./src/redux";
 
-export default function App() {
+const App: FC = () => {
   const [loaded] = useFonts({
     "Nunito-Bold": require("./assets/fonts/NunitoSans-Bold.ttf"),
     "Nunito-Regular": require("./assets/fonts/NunitoSans-Regular.ttf"),
@@ -21,5 +23,11 @@ export default function App() {
     return <ActivityIndicator />;
   }
 
-  return <AppStack />;
-}
+  return (
+    <Provider store={store}>
+      <AppStack />
+    </Provider>
+  );
+};
+
+export default App;

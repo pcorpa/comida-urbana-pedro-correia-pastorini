@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
-import { RootStackParamList } from "../navigation/appNavigator";
+import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MyPlantScreen">;
@@ -8,7 +8,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "MyPlantScreen">;
 export function MyPlantScreen() {
   return (
     <View>
-      <SafeAreaView/>
+      <SafeAreaView />
       <Text>MyPlantScreen</Text>
     </View>
   );

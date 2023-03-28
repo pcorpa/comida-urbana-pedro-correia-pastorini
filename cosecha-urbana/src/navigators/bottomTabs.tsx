@@ -11,6 +11,7 @@ import {
 } from "../screens";
 import { COLOR } from "../constants";
 import { heightPixel, pixelSizeVertical, widthPixel } from "../utils/normalize";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export function BottomTabs() {
+type Props = NativeStackScreenProps<RootStackParamList, "BottomTabs">;
+export function BottomTabs({}: Props) {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -54,20 +56,16 @@ export function BottomTabs() {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: focused ? COLOR.green : COLOR.fondo,
-                borderRadius: heightPixel(100),
-                paddingHorizontal: widthPixel(16),
-                marginTop: pixelSizeVertical(15),
               }}
             >
               <MCI
                 name="account-outline"
                 size={24}
-                color={focused ? COLOR.fondo : COLOR.darkGray}
+                color={focused ? COLOR.blue : COLOR.lightGray}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.fondo : COLOR.darkGray,
+                  color: focused ? COLOR.blue : COLOR.lightGray,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -90,20 +88,18 @@ export function BottomTabs() {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: focused ? COLOR.blue : COLOR.fondo,
-                borderRadius: heightPixel(100),
-                paddingHorizontal: widthPixel(11),
-                marginTop: pixelSizeVertical(15),
+                
+                
               }}
             >
               <MCI
                 name="magnify"
                 size={24}
-                color={focused ? COLOR.fondo : COLOR.darkGray}
+                color={focused ? COLOR.orange : COLOR.lightGray}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.fondo : COLOR.darkGray,
+                  color: focused ? COLOR.orange : COLOR.lightGray,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -126,20 +122,16 @@ export function BottomTabs() {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: focused ? COLOR.orange : COLOR.fondo,
-                borderRadius: heightPixel(100),
-                paddingHorizontal: widthPixel(7),
-                marginTop: pixelSizeVertical(15),
               }}
             >
               <MCI
                 name="plus"
                 size={24}
-                color={focused ? COLOR.fondo : COLOR.darkGray}
+                color={focused ? COLOR.orange : COLOR.lightGray}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.fondo : COLOR.darkGray,
+                  color: focused ? COLOR.orange : COLOR.lightGray,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -162,20 +154,16 @@ export function BottomTabs() {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: focused ? COLOR.green : COLOR.fondo,
-                borderRadius: heightPixel(100),
-                paddingHorizontal: widthPixel(8),
-                marginTop: pixelSizeVertical(15),
               }}
             >
               <MCI
                 name="tree-outline"
                 size={24}
-                color={focused ? COLOR.fondo : COLOR.darkGray}
+                color={focused ? COLOR.green : COLOR.lightGray}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.fondo : COLOR.darkGray,
+                  color: focused ? COLOR.green : COLOR.lightGray,
                   fontFamily: "Nunito-Bold",
                   textAlign: "center",
                 }}

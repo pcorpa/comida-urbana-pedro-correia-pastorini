@@ -7,9 +7,11 @@ import { HomeStack } from "./home";
 export type RootStackParamList = {
   LoginScreen: undefined;
   HomeScreen: undefined;
+  HomeTab: undefined;
   AddPlantScreen: undefined;
   MyPlantScreen: undefined;
   ProfileScreen: undefined;
+  BottomTabs: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
