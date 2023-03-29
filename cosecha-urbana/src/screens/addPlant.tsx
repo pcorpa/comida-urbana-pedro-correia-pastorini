@@ -1,4 +1,11 @@
-import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect } from "react";
 import { LargeButton, SearchBar, StyledTextInput } from "../components";
 import { COLOR } from "../constants";
@@ -25,16 +32,37 @@ export function AddPlantScreen() {
     <View style={styles.container}>
       <SafeAreaView />
       <SearchBar placeholder="Busca la planta que quieres agregar" />
-      <Pressable
-        onPress={() => addPlant({ id: 2, name: "chorola", edible: true })}
-      >
-        <Text>ADD</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => removePlant({ id: 2, name: "chorola", edible: true })}
-      >
-        <Text>REMOVE</Text>
-      </Pressable>
+      <View style={styles.pressablesContainer}>
+        <Pressable
+          style={styles.testButton}
+          onPress={() => addPlant({ id: 2, name: "chorola", edible: true })}
+        >
+          <Text style={styles.pressableText}>ADD</Text>
+        </Pressable>
+        {plants.map((p) => (
+          <TouchableOpacity
+            key={`${new Date()}`}
+            onPress={() => dispatch({ type: REMOVE_PLANT, payload: p })}
+          >
+            <View
+              style={{
+                alignSelf: "center",
+                backgroundColor: COLOR.green,
+                borderRadius: 10,
+                padding: 10,
+                marginVertical: 10,
+              }}
+            >
+              <Text style={styles.pressableText}>Tap to remove item</Text>
+              <Text style={{ textAlign: "center" }}>NAME: {p.name}</Text>
+              <Text style={{ textAlign: "center" }}>ID: {p.id}</Text>
+              <Text style={{ textAlign: "center" }}>
+                EDIBLE: {p.edible ? "Can be eaten" : "Don't eat"}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 }
@@ -45,5 +73,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: COLOR.fondo,
+  },
+  pressablesContainer: { top: 200 },
+  testButton: {
+    backgroundColor: COLOR.blue,
+    borderRadius: 100,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginVertical: 5,
+  },
+  pressableText: {
+    textAlign: "center",
+    fontFamily: "Nunito-Bold",
+    color: COLOR.fondo,
+    fontSize: 20,
   },
 });
