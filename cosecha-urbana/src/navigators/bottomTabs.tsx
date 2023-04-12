@@ -9,7 +9,7 @@ import {
   MyPlantScreen,
   ProfileScreen,
 } from "../screens";
-import { COLOR } from "../constants";
+import { COLORS } from "../constants";
 import { heightPixel, pixelSizeVertical, widthPixel } from "../utils/normalize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: COLOR.fondo,
+    backgroundColor: COLORS.green5,
     height: heightPixel(120),
     justifyContent: "center",
     alignItems: "center",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = NativeStackScreenProps<RootStackParamList, "BottomTabs">;
-export function BottomTabs({}: Props) {
+export function BottomTabs() {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -61,11 +61,11 @@ export function BottomTabs({}: Props) {
               <MCI
                 name="account-outline"
                 size={24}
-                color={focused ? COLOR.blue : COLOR.lightGray}
+                color={focused ? COLORS.green2 : COLORS.green1}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.blue : COLOR.lightGray,
+                  color: focused ? COLORS.green2 : COLORS.green1,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -88,18 +88,16 @@ export function BottomTabs({}: Props) {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 alignItems: "center",
-                
-                
               }}
             >
               <MCI
                 name="magnify"
                 size={24}
-                color={focused ? COLOR.orange : COLOR.lightGray}
+                color={focused ? COLORS.green2 : COLORS.green1}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.orange : COLOR.lightGray,
+                  color: focused ? COLORS.green2 : COLORS.green1,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -127,11 +125,11 @@ export function BottomTabs({}: Props) {
               <MCI
                 name="plus"
                 size={24}
-                color={focused ? COLOR.orange : COLOR.lightGray}
+                color={focused ? COLORS.green2 : COLORS.green1}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.orange : COLOR.lightGray,
+                  color: focused ? COLORS.green2 : COLORS.green1,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -159,11 +157,11 @@ export function BottomTabs({}: Props) {
               <MCI
                 name="tree-outline"
                 size={24}
-                color={focused ? COLOR.green : COLOR.lightGray}
+                color={focused ? COLORS.green2 : COLORS.green1}
               />
               <Text
                 style={{
-                  color: focused ? COLOR.green : COLOR.lightGray,
+                  color: focused ? COLORS.green2 : COLORS.green1,
                   fontFamily: "Nunito-Bold",
                   textAlign: "center",
                 }}

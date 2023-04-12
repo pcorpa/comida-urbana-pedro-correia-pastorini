@@ -1,10 +1,6 @@
 import { ADD_PLANT, Plant, PlantActionTypes, REMOVE_PLANT } from '../types'
 
-export const initialState: Plant[] = [{
-    id: 1,
-    name: "chorola",
-    edible: false
-}]
+export const initialState: Plant[] = []
 
 export function plantReducer(state: Plant[] = initialState, action: PlantActionTypes): Plant[] {
     switch (action.type) {

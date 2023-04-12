@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { COLOR } from "../constants/index";
+import { COLORS } from "../constants/index";
 import {
   fontPixel,
   heightPixel,
@@ -18,10 +18,20 @@ import {
   widthPixel,
 } from "../utils/normalize";
 import { LargeButton } from "../components";
+import { LOGOUT } from "../redux/types";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/reducers";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
 
 export function ProfileScreen({ navigation: { navigate } }: Props) {
+  const dispatch = useDispatch();
+  const session = useSelector((state: RootState) => state.auth);
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -35,7 +45,10 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
       </View>
       <LargeButton
         pressableStyle={{ marginTop: heightPixel(100) }}
-        onPress={() => navigate("LoginScreen")}
+        onPress={() => {
+          logout();
+          console.log("SESSION PROFILE: ", session);
+        }}
       >
         Salir
       </LargeButton>
@@ -48,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: COLOR.fondo,
+    backgroundColor: COLORS.green5,
   },
   profilePicture: {
     width: widthPixel(120),
@@ -62,7 +75,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Quicksand-Regular",
     fontSize: fontPixel(20),
-    color: COLOR.darkGray,
+    color: COLORS.green5,
     textAlign: "center",
     paddingVertical: pixelSizeVertical(5),
   },

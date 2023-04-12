@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInputProps, View } from "react-native";
 import React from "react";
 import { StyledTextInput } from "./styledTextInput";
 import { heightPixel, widthPixel } from "../utils/normalize";
-import { COLOR } from "../constants";
+import { COLORS } from "../constants";
 import { MaterialCommunityIcons as MCI } from "@expo/vector-icons";
 
 interface Props extends TextInputProps {}
@@ -15,7 +15,7 @@ export function SearchBar({ placeholder, onChangeText }: Props) {
         viewStyle={styles.searchBarInput}
         placeholder={placeholder}
       >
-        <MCI name="magnify" size={24} color={COLOR.darkGray} />
+        <MCI name="magnify" size={24} color={COLORS.green5} />
       </StyledTextInput>
     </View>
   );
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     width: widthPixel(370),
     height: heightPixel(50),
     borderRadius: widthPixel(30),
-    backgroundColor: COLOR.fondo,
+    backgroundColor: COLORS.green5,
     alignItems: "center",
     justifyContent: "center",
     top: heightPixel(100),

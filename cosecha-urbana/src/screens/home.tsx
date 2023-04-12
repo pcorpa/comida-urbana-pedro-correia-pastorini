@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { COLOR } from "../constants/index";
+import { COLORS } from "../constants/index";
 import { heightPixel, widthPixel } from "../utils/normalize";
 import MapView from "react-native-maps";
 import { StyledTextInput } from "../components";
@@ -27,7 +27,7 @@ export const HomeScreen = ({ navigation: { navigate } }: Props) => {
           viewStyle={styles.searchBarInput}
           placeholder="Busca la plata que te interesa"
         >
-          <MCI name="magnify" size={24} color={COLOR.darkGray} />
+          <MCI name="magnify" size={24} color={COLORS.green5} />
         </StyledTextInput>
       </View>
       <SafeAreaView />
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: COLOR.fondo,
+    backgroundColor: COLORS.green5,
   },
   map: {
     width: widthPixel(390),
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     width: widthPixel(370),
     height: heightPixel(50),
     borderRadius: widthPixel(30),
-    backgroundColor: COLOR.fondo,
+    backgroundColor: COLORS.green5,
     alignItems: "center",
     justifyContent: "center",
     top: heightPixel(100),

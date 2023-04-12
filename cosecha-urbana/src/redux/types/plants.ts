@@ -1,7 +1,8 @@
 export interface Plant {
-    id: number,
-    name: string,
-    edible: boolean
+    id: number;
+    name: string;
+    edible: boolean;
+    pictureUri: string;
 }
 
 export const ADD_PLANT = 'ADD_PLANT';

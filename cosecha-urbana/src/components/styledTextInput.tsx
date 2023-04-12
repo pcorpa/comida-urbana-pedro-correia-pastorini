@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
-import { COLOR } from "../constants/colors";
+import { COLORS } from "../constants/index";
 
 interface Props extends TextInputProps {
   children?: JSX.Element;
@@ -27,7 +27,7 @@ export const StyledTextInput = ({
       <TextInput
         placeholder={placeholder}
         onChangeText={onChangeText}
-        placeholderTextColor={COLOR.darkGray}
+        placeholderTextColor={COLORS.green1}
         style={[styles.textInput, textInputStyle]}
       ></TextInput>
       {children}
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderBottomWidth: heightPixel(1),
-    borderColor: COLOR.darkGray,
+    borderColor: COLORS.green1,
     width: widthPixel(350),
     height: heightPixel(40),
     justifyContent: "space-between",
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: "Quicksand-Regular",
     fontSize: fontPixel(16),
-    color: COLOR.darkGray,
+    color: COLORS.green1,
   },
 });

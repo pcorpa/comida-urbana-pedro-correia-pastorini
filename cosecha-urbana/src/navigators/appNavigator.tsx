@@ -2,10 +2,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { BottomTabs } from "./bottomTabs";
-import { HomeStack } from "./home";
+import { AuthStack } from "./auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/reducers";
 
 export type RootStackParamList = {
   LoginScreen: undefined;
+  StartScreen: undefined;
+  RegisterScreen: undefined;
   HomeScreen: undefined;
   HomeTab: undefined;
   AddPlantScreen: undefined;
@@ -17,10 +21,11 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppStack() {
-  const [user, setUser] = useState(false);
+  const session = useSelector((state: RootState) => state.auth);
+
   return (
     <NavigationContainer>
-      <HomeStack/>
+      {session.session ? <BottomTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 }

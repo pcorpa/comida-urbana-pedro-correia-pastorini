@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
-import { COLOR } from "../constants";
+import { COLORS } from "../constants";
 
 interface Props extends PressableProps {
   children: string;
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   button: {
     width: widthPixel(370),
     height: heightPixel(50),
-    backgroundColor: COLOR.blue,
+    backgroundColor: COLORS.green4,
     borderRadius: widthPixel(30),
     justifyContent: "center",
     alignItems: "center",
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "Nunito-Bold",
     fontSize: fontPixel(20),
-    color: COLOR.fondo,
+    color: COLORS.green1,
   },
 });

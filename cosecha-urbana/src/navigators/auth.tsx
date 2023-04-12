@@ -7,25 +7,35 @@ import {
   HomeScreen,
   LoginScreen,
   MyPlantScreen,
+  RegisterScreen,
+  StartScreen,
 } from "../screens";
-import { BottomTabs } from "./bottomTabs";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export function HomeStack() {
+export function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
+    <Stack.Navigator initialRouteName="StartScreen">
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          headerBlurEffect: "light",
+          title: "",
+        }}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="HomeScreen"
-        component={BottomTabs}
+        name="StartScreen"
+        component={StartScreen}
         options={{ headerShown: false }}
       />
-     
     </Stack.Navigator>
   );
-};
+}

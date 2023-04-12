@@ -1,8 +1,10 @@
-export { ProfileScreen } from "./profile";
-export {AddPlantScreen} from "./addPlant";
-export {LoginScreen} from "./login";
-export {HomeScreen} from "./home";
-export {MyPlantScreen} from "./myPlant";
+export * from "./profile";
+export * from "./addPlant";
+export * from "./login";
+export * from "./register";
+export * from "./start";
+export * from "./home";
+export * from "./myPlant";
 
 
 

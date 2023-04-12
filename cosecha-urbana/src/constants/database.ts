@@ -1,0 +1,1 @@
+export const API_URL = 'https://cosecha-urbana-test-default-rtdb.firebaseio.com/'
