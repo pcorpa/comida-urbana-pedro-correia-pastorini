@@ -9,63 +9,61 @@ import {
 import React from "react";
 import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useDispatch } from "react-redux";
+import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/reducers";
-import { REMOVE_PLANT } from "../redux/types";
+
 import { COLORS } from "../constants";
 import { heightPixel, widthPixel } from "../utils/normalize";
+import { RootState } from "../redux";
+import { Plant, removePlant, selectPlant } from "../redux/slices/plantSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "MyPlantScreen">;
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function MyPlantScreen() {
   const dispatch = useDispatch();
-  const plants = useSelector((state: RootState) => state.plant);
+  const plants = useTypedSelector(selectPlant);
+  console.log("PLANTS: ", plants)
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <SafeAreaView />
-      {plants.map((p) => (
-        <TouchableOpacity
-          key={`${new Date()}`}
-          onPress={() => dispatch({ type: REMOVE_PLANT, payload: p })}
-        >
-          <View
-            style={{
-              alignSelf: "center",
-              backgroundColor: COLORS.green5,
-              borderRadius: 10,
-              padding: 10,
-              marginVertical: 10,
-            }}
-          >
-            <Text style={{ color: "red" }}>Tap to remove item</Text>
-            <Text style={{ textAlign: "center", color: COLORS.green1 }}>
-              NAME: {p.name}
-            </Text>
-            <Text style={{ textAlign: "center", color: COLORS.green1 }}>
-              ID: {p.id}
-            </Text>
-            <Text style={{ textAlign: "center", color: COLORS.green1 }}>
-              EDIBLE: {p.edible ? "Can be eaten" : "Don't eat"}
-            </Text>
-            <Image style={styles.image} source={{ uri: p.pictureUri }} />
-          </View>
-        </TouchableOpacity>
-      ))}
-      <Text>MyPlantScreen</Text>
-      {plants.map((p) => (
-        <TouchableOpacity
-          onPress={() => dispatch({ type: REMOVE_PLANT, payload: p })}
-        >
-          <View>
-            <Text>{p.name}</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
+      {plants  ? (
+        plants.map((p: Plant) => (
+          <TouchableOpacity key={p.id} onPress={() => dispatch(removePlant(p))}>
+            <View
+              style={{
+                alignSelf: "center",
+                backgroundColor: COLORS.green5,
+                borderRadius: 10,
+                padding: 10,
+                marginVertical: 10,
+              }}
+            >
+              <Text style={{ color: "red" }}>Tap to remove item</Text>
+              <Text style={{ textAlign: "center", color: COLORS.green1 }}>
+                NAME: {p.name}
+              </Text>
+              <Text style={{ textAlign: "center", color: COLORS.green1 }}>
+                ID: {p.id}
+              </Text>
+              <Text style={{ textAlign: "center", color: COLORS.green1 }}>
+                EDIBLE: {p.edible ? "Can be eaten" : "Don't eat"}
+              </Text>
+              <Image style={styles.image} source={{ uri: p.pictureUri }} />
+            </View>
+          </TouchableOpacity>
+        ))
+      ) : (
+        <Text>Aqui se mostraran las plantas que has agregado</Text>
+      )}
     </View>
   );
 }
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: COLORS.green1,
+  },
   image: {
     width: widthPixel(250),
     height: heightPixel(200),

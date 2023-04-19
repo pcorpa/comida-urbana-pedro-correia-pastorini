@@ -3,16 +3,16 @@ import {
   Text,
   View,
   Image,
-  Button,
   Alert,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import { COLORS } from "../constants";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
-import { useDispatch } from "react-redux";
 
 interface Props {
   onImage: (image: string) => void;
@@ -20,7 +20,6 @@ interface Props {
 
 const ImageSelector = ({ onImage }: Props) => {
   const [pickedUri, setPickedUri] = useState<string>("");
-  const dispatch = useDispatch();
 
   const VerifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -51,22 +50,30 @@ const ImageSelector = ({ onImage }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.preview}>
-        {!pickedUri ? (
-          <View style={styles.noImageContainer}>
-            <Text style={styles.noImageText}>
-              No hay imagen seleccionada...
-            </Text>
-          </View>
-        ) : (
-          <Image style={styles.image} source={{ uri: pickedUri }} />
-        )}
-      </View>
-      <View style={styles.pressableContainer}>
-        <Pressable style={styles.pressable} onPress={handlerTakeImage} />
-
-        <Text style={styles.text}>Tomar foto</Text>
+    <View>
+      <View style={styles.container}>
+        <Pressable style={styles.preview} onPress={handlerTakeImage}>
+          {!pickedUri ? (
+            <View style={styles.noImageContainer}>
+              <Text style={styles.noImageText}>Selecciona una imgen</Text>
+              <Ionicons name="image" size={42} color={COLORS.green1} />
+            </View>
+          ) : (
+            <View>
+              <TouchableOpacity
+                onPress={() => setPickedUri("")}
+                style={styles.remove}
+              >
+                <AntDesign
+                  name="closecircleo"
+                  size={28}
+                  color={COLORS.green3}
+                />
+              </TouchableOpacity>
+              <Image style={styles.image} source={{ uri: pickedUri }} />
+            </View>
+          )}
+        </Pressable>
       </View>
     </View>
   );
@@ -76,7 +83,6 @@ export default ImageSelector;
 
 const styles = StyleSheet.create({
   container: {
-    
     marginBottom: 10,
     width: widthPixel(350),
     marginTop: heightPixel(30),
@@ -89,7 +95,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: COLORS.green3,
     borderWith: 1,
-
   },
   noImageContainer: {
     width: widthPixel(350),
@@ -104,28 +109,21 @@ const styles = StyleSheet.create({
     color: COLORS.green1,
     fontSize: fontPixel(20),
     fontFamily: "Quicksand-Regular",
+    paddingBottom: heightPixel(20),
   },
   image: {
-    width: widthPixel(250),
+    width: widthPixel(350),
     height: heightPixel(200),
     borderRadius: widthPixel(20),
   },
-  pressableContainer: {
-    width: widthPixel(100),
-    height: heightPixel(100),
-    alignSelf: "center",
+  remove: {
+    position: "absolute",
+    zIndex: 1000,
+    width: widthPixel(30),
+    height: heightPixel(30),
+    borderRadius: widthPixel(100),
+    alignSelf: "flex-end",
     alignItems: "center",
     justifyContent: "center",
-  },
-  pressable: {
-    width: widthPixel(50),
-    height: heightPixel(50),
-    borderRadius: 100,
-    marginBottom: heightPixel(10),
-    backgroundColor: COLORS.green1,
-  },
-  text: {
-    color: COLORS.green1,
-    textAlign: "center",
   },
 });

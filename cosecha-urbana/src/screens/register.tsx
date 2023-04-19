@@ -13,12 +13,12 @@ import { LargeButton, StyledTextInput } from "../components/index";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 import { COLORS } from "../constants/index";
 import { MaterialCommunityIcons as MCI } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
-import { REGISTER, Session } from "../redux/types";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/reducers";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux";
+import { Session, register } from "../redux/slices/authSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "RegisterScreen">;
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
   const [email, setEmail] = useState("");
@@ -27,9 +27,10 @@ export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
   const [apellido, setApellido] = useState("");
   const dispatch = useDispatch();
   const [hiden, setHiden] = useState(true);
-  const session = useSelector((state: RootState) => state.auth);
-  const register = (session: Session) => {
-    dispatch({ type: REGISTER, payload: session });
+  const session = useTypedSelector((state: RootState) => state.auth);
+
+  const registerNewUser = (session: Session) => {
+   dispatch(register(session));
   };
 
   const icon = hiden ? "eye" : "eye-outline";
@@ -66,7 +67,7 @@ export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
       <View style={styles.buttonContainer}>
         <LargeButton
           onPress={() => {
-            register({
+            registerNewUser({
               session: true,
               userEmail: email,
               userId: "1",

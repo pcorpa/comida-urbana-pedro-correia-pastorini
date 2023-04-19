@@ -18,18 +18,20 @@ import {
   widthPixel,
 } from "../utils/normalize";
 import { LargeButton } from "../components";
-import { LOGOUT } from "../redux/types";
-import { useDispatch } from "react-redux";
+
+import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/reducers";
+import { RootState } from "../redux";
+import { logout } from "../redux/slices/authSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function ProfileScreen({ navigation: { navigate } }: Props) {
   const dispatch = useDispatch();
-  const session = useSelector((state: RootState) => state.auth);
-  const logout = () => {
-    dispatch({ type: LOGOUT });
+  const session = useTypedSelector((state: RootState) => state.auth);
+  const logoutUser = () => {
+    dispatch(logout(session));
   };
 
   return (
@@ -46,7 +48,7 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
       <LargeButton
         pressableStyle={{ marginTop: heightPixel(100) }}
         onPress={() => {
-          logout();
+          logoutUser();
           console.log("SESSION PROFILE: ", session);
         }}
       >

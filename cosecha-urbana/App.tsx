@@ -4,7 +4,11 @@ import { useFonts } from "expo-font";
 import { hideAsync } from "expo-splash-screen";
 import { FC, useEffect } from "react";
 import { Provider } from "react-redux";
-import store from "./src/redux";
+import { store } from "./src/redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+const persistor = persistStore(store);
 
 const App: FC = () => {
   const [loaded] = useFonts({
@@ -24,9 +28,11 @@ const App: FC = () => {
   }
 
   return (
-    <Provider store={store}>
-      <AppStack />
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <AppStack />
+      </Provider>
+    </PersistGate>
   );
 };
 

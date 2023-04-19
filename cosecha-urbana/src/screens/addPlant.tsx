@@ -1,37 +1,40 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
-import { LargeButton, SearchBar, StyledTextInput } from "../components";
+import { LargeButton, StyledTextInput } from "../components";
 import { COLORS } from "../constants";
-import { useSelector, useDispatch } from "react-redux";
-import { ADD_PLANT, Plant, REMOVE_PLANT } from "../redux/types";
-import { RootState } from "../redux/reducers";
 import { AntDesign } from "@expo/vector-icons";
-import { widthPixel } from "../utils/normalize";
-import { fontPixel } from "../utils/normalize";
-import { heightPixel } from "../utils/normalize";
+import { widthPixel, fontPixel, heightPixel } from "../utils/normalize";
 import ImageSelector from "../components/imageSelector";
+
+import { RootState } from "../redux/index";
+import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
+import { selectPlant, addPlant, Plant } from "../redux/slices/plantSlice";
+
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function AddPlantScreen() {
   const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
   const [pictureUri, setPictureUri] = useState<string>("");
   const [edible, setEdible] = useState<boolean>(false);
+  const plants = useTypedSelector(selectPlant);
 
-  const plants = useSelector((state: RootState) => state.plant);
-  const addPlant = (plant: Plant) => {
-    dispatch({ type: ADD_PLANT, payload: plant });
-    setName("");
-    setPictureUri("");
-    setEdible(false);
+  const addNewPlant = (plant: Plant) => {
+    if (!plant.name) {
+      alert("Debes nombrar la planta que quieres agregar");
+    } else if (!plant.pictureUri) {
+      alert("Debes elegir una imagen");
+    } else {
+      dispatch(addPlant(plant));
+      setName("");
+      setPictureUri("");
+      setEdible(false);
+    }
   };
-
+  const isDisabled = name != "" && pictureUri != "";
+  console.log("URI", pictureUri);
+  console.log("NAME", name);
+  console.log("EDIBLE", edible);
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -39,6 +42,7 @@ export function AddPlantScreen() {
         <Text style={styles.title}>Que planta quieres agregar?</Text>
         <StyledTextInput
           viewStyle={styles.textInput}
+          onChangeText={(name) => setName(name)}
           placeholder="Nombre de la planta"
         />
 
@@ -59,8 +63,9 @@ export function AddPlantScreen() {
         <ImageSelector onImage={(image: string) => setPictureUri(image)} />
       </View>
       <LargeButton
+        disabled={!isDisabled}
         onPress={() =>
-          addPlant({
+          addNewPlant({
             id: Math.random(),
             name: name,
             edible: edible,
