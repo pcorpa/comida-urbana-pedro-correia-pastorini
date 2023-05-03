@@ -21,13 +21,15 @@ export const StyledTextInput = ({
   children,
   textInputStyle,
   viewStyle,
+  secureTextEntry,
 }: Props) => {
   return (
     <View style={[styles.container, viewStyle]}>
       <TextInput
+        secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         onChangeText={onChangeText}
-        placeholderTextColor={COLORS.green1}
+        placeholderTextColor={COLORS.green5}
         style={[styles.textInput, textInputStyle]}
       ></TextInput>
       {children}
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderBottomWidth: heightPixel(1),
-    borderColor: COLORS.green1,
+    borderColor: COLORS.green5,
     width: widthPixel(350),
     height: heightPixel(40),
     justifyContent: "space-between",
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontFamily: "Quicksand-Regular",
-    fontSize: fontPixel(16),
-    color: COLORS.green1,
+    fontSize: fontPixel(22),
+    color: COLORS.green5,
   },
 });

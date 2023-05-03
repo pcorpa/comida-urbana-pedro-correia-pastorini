@@ -2,10 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 
 export interface Plant {
-  id: number;
+  id?: string;
   name: string;
   edible: boolean;
-  pictureUri: string;
+  photoUri: string;
 }
 
 export const initialState: Plant[] = [];
@@ -14,15 +14,23 @@ export const plantSlice = createSlice({
   name: "plantSlice",
   initialState,
   reducers: {
-    addPlant: (state: Plant[], action: PayloadAction<Plant>) => [
+    addPlantToLocalStore: (state: Plant[], action: PayloadAction<Plant>) => [
       ...state,
       action.payload,
     ],
-    removePlant: (state: Plant[], action) =>
-      state.filter((s) => s.id != action.payload.id),
+    addAllPlantsfromDB: (state: Plant[], action: PayloadAction<Plant[]>) =>
+      action.payload,
+    removePlant: (state: Plant[], action: PayloadAction<Plant>) =>
+      state.filter((p) => p.id !== action.payload.id),
+    logOutCleanUp: () => [],
   },
 });
 
-export const { addPlant, removePlant } = plantSlice.actions;
+export const {
+  addPlantToLocalStore,
+  addAllPlantsfromDB,
+  removePlant,
+  logOutCleanUp,
+} = plantSlice.actions;
 export const selectPlant = (state: RootState) => state.plants;
 export default plantSlice.reducer;

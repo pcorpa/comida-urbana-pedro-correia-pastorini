@@ -1,58 +1,140 @@
 import {
   View,
-  Text,
   Image,
   StyleSheet,
   Pressable,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LargeButton, StyledTextInput } from "../components/index";
+import {
+  LargeButton,
+  StyledTextInput,
+  errorMessage,
+} from "../components/index";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 import { COLORS } from "../constants/index";
 import { MaterialCommunityIcons as MCI } from "@expo/vector-icons";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
-import { Session, register } from "../redux/slices/authSlice";
+import { checkingCredentials, login, logout } from "../redux/slices/authSlice";
+import { useForm } from "../hooks";
+import { createUserWithEmailPassword } from "../firebase/authProviders";
+import { loginStyles } from "../constants/styles";
+import { getAuth, updateProfile } from "firebase/auth";
+import { FirebaseAuth } from "../firebase/config";
 
 type Props = NativeStackScreenProps<RootStackParamList, "RegisterScreen">;
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
+const formFields = {
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+};
+
 export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
-  const [email, setEmail] = useState("");
-  const [contraseña, setContraceña] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
   const dispatch = useDispatch();
   const [hiden, setHiden] = useState(true);
   const session = useTypedSelector((state: RootState) => state.auth);
+  const [nameValid, setNameValid] = useState(true);
+  const [surnameValid, setSurnameValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
 
-  const registerNewUser = (session: Session) => {
-   dispatch(register(session));
+  const { name, surname, email, password, onChange } = useForm(formFields);
+
+  const allFormFieldsValid =
+    nameValid && surnameValid && emailValid && passwordValid;
+
+  const registerNewUser = async (
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+  ) => {
+    dispatch(checkingCredentials());
+    const { ok, emailFromFirebase, error, uid } =
+      await createUserWithEmailPassword({
+        name,
+        surname,
+        email,
+        password,
+      });
+
+    if (await !ok) {
+      dispatch(logout(`${error}`));
+    }
+    console.log("OK", ok);
+    if (await ok) {
+      await updateProfile(FirebaseAuth.currentUser!, {
+        displayName: `${name} ${surname}`,
+      });
+      await dispatch(
+        login({
+          ...session,
+          errorMessage: null,
+          user: {
+            userEmail: emailFromFirebase!,
+            userId: uid!,
+            userName: name,
+            userLastName: surname,
+            photoURL: null,
+          },
+        })
+      );
+    }
   };
 
   const icon = hiden ? "eye" : "eye-outline";
 
   return (
-    <View style={styles.container}>
+    <View style={loginStyles.container}>
       <SafeAreaView />
-      <Image source={require("../../assets/logo.png")} style={styles.logo} />
-      <StyledTextInput
-        onChangeText={(value) => setEmail(value)}
-        placeholder="Email"
+      <Image
+        source={require("../../assets/logo.png")}
+        style={loginStyles.logo}
       />
       <StyledTextInput
-        onChangeText={(value) => setNombre(value)}
+        onChangeText={(value) => {
+          onChange(value, "name");
+          value.length <= 0 ? setNameValid(false) : setNameValid(true);
+        }}
         placeholder="Nombre"
       />
+      <View style={loginStyles.errorContainer}>
+        {!nameValid && errorMessage("Requerido")}
+      </View>
       <StyledTextInput
-        onChangeText={(value) => setApellido(value)}
-        placeholder="Apellido"
+        onChangeText={(value) => {
+          onChange(value, "surname");
+          value.length <= 0 ? setSurnameValid(false) : setSurnameValid(true);
+        }}
+        placeholder="Appellido"
       />
+      <View style={loginStyles.errorContainer}>
+        {!surnameValid && errorMessage("Requerido")}
+      </View>
       <StyledTextInput
-        onChangeText={(value) => setContraceña(value)}
+        onChangeText={(value) => {
+          onChange(value, "email");
+          value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)
+            ? setEmailValid(true)
+            : setEmailValid(false);
+        }}
+        placeholder="Email"
+      />
+      <View style={loginStyles.errorContainer}>
+        {!emailValid && errorMessage("Email invalido")}
+      </View>
+      <StyledTextInput
+        onChangeText={(value) => {
+          onChange(value, "password");
+          value.length <= 5 ? setPasswordValid(false) : setPasswordValid(true);
+        }}
         placeholder="Contraseña"
         secureTextEntry={hiden}
         spellCheck={false}
@@ -64,45 +146,23 @@ export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
           <MCI name={icon} size={24} color={COLORS.green3} />
         </Pressable>
       </StyledTextInput>
-      <View style={styles.buttonContainer}>
+      <View style={loginStyles.errorContainer}>
+        {!passwordValid && errorMessage("Minimo 6 caracteres")}
+      </View>
+
+      <View style={loginStyles.buttonContainer}>
         <LargeButton
-          onPress={() => {
-            registerNewUser({
-              session: true,
-              userEmail: email,
-              userId: "1",
-              userName: nombre,
-              userLastName: apellido,
-            });
-            console.log("SESSION REGISTER: ", session);
-          }}
+          disabled={
+            !allFormFieldsValid || session.status === "checking" ? true : false
+          }
+          onPress={() => registerNewUser(name, surname, email, password)}
         >
           Registrarse
         </LargeButton>
+        <View style={[loginStyles.errorContainer, { alignItems: "center" }]}>
+          {!allFormFieldsValid && errorMessage("Ups :( Algo salio mal")}
+        </View>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: COLORS.green5,
-  },
-  logo: {
-    width: widthPixel(200),
-    height: heightPixel(200),
-    resizeMode: "contain",
-    marginBottom: heightPixel(50),
-  },
-  textInputPlaceholder: {
-    fontFamily: "Quicksand-Regular",
-    fontSize: fontPixel(14),
-    color: COLORS.green2,
-  },
-  buttonContainer: {
-    marginTop: heightPixel(50),
-  },
-});

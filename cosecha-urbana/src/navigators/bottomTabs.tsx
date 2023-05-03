@@ -61,11 +61,11 @@ export function BottomTabs() {
               <MCI
                 name="account-outline"
                 size={24}
-                color={focused ? COLORS.green2 : COLORS.green1}
+                color={focused ? COLORS.green1 : COLORS.green2}
               />
               <Text
                 style={{
-                  color: focused ? COLORS.green2 : COLORS.green1,
+                  color: focused ? COLORS.green1 : COLORS.green2,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -93,11 +93,11 @@ export function BottomTabs() {
               <MCI
                 name="magnify"
                 size={24}
-                color={focused ? COLORS.green2 : COLORS.green1}
+                color={focused ? COLORS.green1 : COLORS.green2}
               />
               <Text
                 style={{
-                  color: focused ? COLORS.green2 : COLORS.green1,
+                  color: focused ? COLORS.green1 : COLORS.green2,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -125,11 +125,11 @@ export function BottomTabs() {
               <MCI
                 name="plus"
                 size={24}
-                color={focused ? COLORS.green2 : COLORS.green1}
+                color={focused ? COLORS.green1 : COLORS.green2}
               />
               <Text
                 style={{
-                  color: focused ? COLORS.green2 : COLORS.green1,
+                  color: focused ? COLORS.green1 : COLORS.green2,
                   fontFamily: "Nunito-Bold",
                 }}
               >
@@ -157,11 +157,11 @@ export function BottomTabs() {
               <MCI
                 name="tree-outline"
                 size={24}
-                color={focused ? COLORS.green2 : COLORS.green1}
+                color={focused ? COLORS.green1 : COLORS.green2}
               />
               <Text
                 style={{
-                  color: focused ? COLORS.green2 : COLORS.green1,
+                  color: focused ? COLORS.green1 : COLORS.green2,
                   fontFamily: "Nunito-Bold",
                   textAlign: "center",
                 }}

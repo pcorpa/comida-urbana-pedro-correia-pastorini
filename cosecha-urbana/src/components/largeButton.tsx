@@ -23,7 +23,7 @@ export const LargeButton = ({
     button: {
       width: widthPixel(370),
       height: heightPixel(50),
-      backgroundColor: COLORS.green4,
+      backgroundColor: disabled ? "#d6d3d1" : COLORS.green4,
       borderRadius: widthPixel(30),
       justifyContent: "center",
       alignItems: "center",
@@ -32,11 +32,15 @@ export const LargeButton = ({
     buttonText: {
       fontFamily: "Nunito-Bold",
       fontSize: fontPixel(20),
-      color: disabled ? COLORS.green3 : COLORS.green1,
+      color: disabled ? COLORS.green2 : COLORS.green1,
     },
   });
   return (
-    <Pressable onPress={onPress} style={[styles.button, pressableStyle]}>
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.button, pressableStyle]}
+    >
       <Text style={styles.buttonText}>{title}</Text>
     </Pressable>
   );

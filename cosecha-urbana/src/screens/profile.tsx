@@ -23,6 +23,8 @@ import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
 import { logout } from "../redux/slices/authSlice";
+import { logoutFirebase } from "../firebase/authProviders";
+import { logOutCleanUp } from "../redux/slices/plantSlice";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -30,8 +32,10 @@ const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export function ProfileScreen({ navigation: { navigate } }: Props) {
   const dispatch = useDispatch();
   const session = useTypedSelector((state: RootState) => state.auth);
-  const logoutUser = () => {
-    dispatch(logout(session));
+  const logoutUser = async () => {
+    await logoutFirebase();
+    dispatch(logout(null));
+    dispatch(logOutCleanUp());
   };
 
   return (
@@ -42,14 +46,16 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
         style={styles.profilePicture}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.text}>Pedro Correia</Text>
-        <Text style={styles.text}>P.correia.pastorini@gmail.com</Text>
+        <Text
+          style={styles.text}
+        >{`${session.user?.userName} ${session.user?.userLastName}`}</Text>
+        <Text style={styles.text}>{`${session.user?.userEmail}`}</Text>
       </View>
       <LargeButton
         pressableStyle={{ marginTop: heightPixel(100) }}
         onPress={() => {
           logoutUser();
-          console.log("SESSION PROFILE: ", session);
+          console.log("SESSION PROFILE: ", session.status);
         }}
       >
         Salir
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Quicksand-Regular",
     fontSize: fontPixel(20),
-    color: COLORS.green5,
+    color: COLORS.green1,
     textAlign: "center",
     paddingVertical: pixelSizeVertical(5),
   },

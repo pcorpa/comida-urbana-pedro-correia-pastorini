@@ -22,14 +22,17 @@ export function AuthStack() {
         options={{
           headerShown: true,
           headerTransparent: true,
-          headerBlurEffect: "light",
           title: "",
         }}
       />
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          title: "",
+        }}
       />
       <Stack.Screen
         name="StartScreen"

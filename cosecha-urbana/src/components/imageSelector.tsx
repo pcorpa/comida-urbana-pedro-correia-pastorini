@@ -7,7 +7,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
@@ -16,11 +16,10 @@ import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 
 interface Props {
   onImage: (image: string) => void;
+  pickedUri: string;
 }
 
-const ImageSelector = ({ onImage }: Props) => {
-  const [pickedUri, setPickedUri] = useState<string>("");
-
+const ImageSelector = ({ onImage, pickedUri }: Props) => {
   const VerifyPermissions = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -41,8 +40,6 @@ const ImageSelector = ({ onImage }: Props) => {
     });
 
     if (image.assets) {
-      console.log("IMAGE: ", image.assets[0]);
-      setPickedUri(image.assets[0].uri);
       onImage(image.assets[0].uri);
     } else {
       console.log("ERROR, NO HAY IMAGE");
@@ -61,7 +58,7 @@ const ImageSelector = ({ onImage }: Props) => {
           ) : (
             <View>
               <TouchableOpacity
-                onPress={() => setPickedUri("")}
+                onPress={() => onImage("")}
                 style={styles.remove}
               >
                 <AntDesign

@@ -1,7 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import plantReducer from "./slices/plantSlice";
-import authReducer from "./slices/authSlice";
-import storage from "redux-persist/lib/storage";
+import { plantSlice } from "./slices/plantSlice";
+import { authSlice } from "./slices/authSlice";
 import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,8 +12,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  plants: plantReducer,
+  auth: authSlice.reducer,
+  plants: plantSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

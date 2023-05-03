@@ -8,33 +8,46 @@ import ImageSelector from "../components/imageSelector";
 
 import { RootState } from "../redux/index";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
-import { selectPlant, addPlant, Plant } from "../redux/slices/plantSlice";
+import {
+  selectPlant,
+  Plant,
+  addPlantToLocalStore,
+} from "../redux/slices/plantSlice";
+import { firestoreAddPlant, saveToRealTimeDB } from "../firebase/dbProviders";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function AddPlantScreen() {
   const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
-  const [pictureUri, setPictureUri] = useState<string>("");
+  const [photoUri, setPhotoUri] = useState<string>("");
   const [edible, setEdible] = useState<boolean>(false);
+  const [currentId, setCurrentId] = useState<string>();
+
   const plants = useTypedSelector(selectPlant);
 
-  const addNewPlant = (plant: Plant) => {
-    if (!plant.name) {
+  const addNewPlant = async ({ name, edible, photoUri }: Plant) => {
+    if (!name) {
       alert("Debes nombrar la planta que quieres agregar");
-    } else if (!plant.pictureUri) {
+    } else if (!photoUri) {
       alert("Debes elegir una imagen");
     } else {
-      dispatch(addPlant(plant));
-      setName("");
-      setPictureUri("");
-      setEdible(false);
+      try {
+        const plantFromSetDoc = await firestoreAddPlant(name, edible, photoUri);
+
+        if (plantFromSetDoc?.id) {
+          await setCurrentId(plantFromSetDoc?.id);
+        }
+      } catch (error) {
+        console.log("Error while ADD NEW PLANT: ", error);
+      }
     }
   };
-  const isDisabled = name != "" && pictureUri != "";
-  console.log("URI", pictureUri);
-  console.log("NAME", name);
-  console.log("EDIBLE", edible);
+
+  console.log(plants);
+
+  const isDisabled = name != "" && photoUri != "";
+
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -51,7 +64,7 @@ export function AddPlantScreen() {
 
           {edible ? (
             <Pressable onPress={() => setEdible(!edible)}>
-              <AntDesign name="checksquare" size={24} color={COLORS.green1} />
+              <AntDesign name="checksquare" size={24} color={COLORS.green5} />
             </Pressable>
           ) : (
             <Pressable onPress={() => setEdible(!edible)}>
@@ -60,18 +73,32 @@ export function AddPlantScreen() {
           )}
         </View>
 
-        <ImageSelector onImage={(image: string) => setPictureUri(image)} />
+        <ImageSelector
+          pickedUri={photoUri}
+          onImage={(image: string) => setPhotoUri(image)}
+        />
       </View>
       <LargeButton
         disabled={!isDisabled}
-        onPress={() =>
-          addNewPlant({
-            id: Math.random(),
-            name: name,
-            edible: edible,
-            pictureUri: pictureUri,
-          })
-        }
+        onPress={async () => {
+          await addNewPlant({
+            name,
+            edible,
+            photoUri,
+          });
+          await dispatch(
+            addPlantToLocalStore({
+              id: currentId,
+              name,
+              edible,
+              photoUri,
+            } as Plant)
+          );
+
+          await setName("");
+          await setPhotoUri("");
+          await setEdible(false);
+        }}
       >
         Add
       </LargeButton>
@@ -84,14 +111,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: COLORS.green5,
+    backgroundColor: "white",
   },
   mainSectionContainer: {
     height: heightPixel(600),
   },
-
   button: {
-    backgroundColor: COLORS.green2,
+    backgroundColor: COLORS.green5,
     borderRadius: 100,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -115,13 +141,13 @@ const styles = StyleSheet.create({
     marginTop: heightPixel(20),
   },
   text: {
-    color: COLORS.green1,
+    color: COLORS.green5,
     fontFamily: "Quicksand-Regular",
     fontSize: fontPixel(16),
     paddingRight: widthPixel(20),
   },
   title: {
-    color: COLORS.green1,
+    color: COLORS.green5,
     fontFamily: "Nunito-Bold",
     fontSize: fontPixel(20),
     marginTop: 10,

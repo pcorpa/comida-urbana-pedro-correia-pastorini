@@ -6,7 +6,6 @@ import { AuthStack } from "./auth";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../redux";
 
-
 export type RootStackParamList = {
   LoginScreen: undefined;
   StartScreen: undefined;
@@ -20,14 +19,13 @@ export type RootStackParamList = {
 };
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppStack() {
   const session = useTypedSelector((state: RootState) => state.auth);
 
   return (
     <NavigationContainer>
-      {session.session ? <BottomTabs /> : <AuthStack />}
+      {session.status === "authenticated" ? <BottomTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 }
