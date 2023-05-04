@@ -44,8 +44,6 @@ export function AddPlantScreen() {
     }
   };
 
-  console.log(plants);
-
   const isDisabled = name != "" && photoUri != "";
 
   return (

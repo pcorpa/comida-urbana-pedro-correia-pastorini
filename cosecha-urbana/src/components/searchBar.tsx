@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInputProps, View } from "react-native";
+import { StyleSheet, TextInputProps, View } from "react-native";
 import React from "react";
 import { StyledTextInput } from "./styledTextInput";
 import { heightPixel, widthPixel } from "../utils/normalize";

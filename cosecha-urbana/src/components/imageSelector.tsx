@@ -7,7 +7,6 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
-import React, { Dispatch, useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
@@ -42,7 +41,7 @@ const ImageSelector = ({ onImage, pickedUri }: Props) => {
     if (image.assets) {
       onImage(image.assets[0].uri);
     } else {
-      console.log("ERROR, NO HAY IMAGE");
+      console.log("ERROR, NO HAY IMAGEN");
     }
   };
 

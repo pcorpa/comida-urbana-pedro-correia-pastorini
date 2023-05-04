@@ -10,7 +10,7 @@ import {
   ProfileScreen,
 } from "../screens";
 import { COLORS } from "../constants";
-import { heightPixel, pixelSizeVertical, widthPixel } from "../utils/normalize";
+import { heightPixel } from "../utils/normalize";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();

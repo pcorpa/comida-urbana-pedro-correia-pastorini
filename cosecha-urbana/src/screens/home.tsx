@@ -28,9 +28,9 @@ export const HomeScreen = ({ navigation: { navigate } }: Props) => {
     <View style={styles.noPlantContainer}>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => navigate("AddPlantScreen")}>
-          <Text style={styles.noPlantsTouchableText}>Tap aqui </Text>
+          <Text style={styles.noPlantsTouchableText}>Toca aqui</Text>
         </TouchableOpacity>
-        <Text style={styles.noPlantsText}>{`para agregar la primera :)`}</Text>
+        <Text style={styles.noPlantsText}>{` para agregar una planta :)`}</Text>
       </View>
     </View>
   );

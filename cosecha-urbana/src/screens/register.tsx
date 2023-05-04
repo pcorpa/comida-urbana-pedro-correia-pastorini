@@ -1,11 +1,4 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  Pressable,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Image, Pressable, SafeAreaView } from "react-native";
 import { useState } from "react";
 import { RootStackParamList } from "../navigators/appNavigator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -14,7 +7,6 @@ import {
   StyledTextInput,
   errorMessage,
 } from "../components/index";
-import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 import { COLORS } from "../constants/index";
 import { MaterialCommunityIcons as MCI } from "@expo/vector-icons";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -23,7 +15,7 @@ import { checkingCredentials, login, logout } from "../redux/slices/authSlice";
 import { useForm } from "../hooks";
 import { createUserWithEmailPassword } from "../firebase/authProviders";
 import { loginStyles } from "../constants/styles";
-import { getAuth, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "../firebase/config";
 
 type Props = NativeStackScreenProps<RootStackParamList, "RegisterScreen">;
@@ -68,7 +60,7 @@ export const RegisterScreen = ({ navigation: { navigate } }: Props) => {
     if (await !ok) {
       dispatch(logout(`${error}`));
     }
-    console.log("OK", ok);
+
     if (await ok) {
       await updateProfile(FirebaseAuth.currentUser!, {
         displayName: `${name} ${surname}`,

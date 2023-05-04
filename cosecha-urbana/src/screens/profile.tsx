@@ -42,7 +42,7 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
     <View style={styles.container}>
       <SafeAreaView />
       <Image
-        source={require("../../assets/images/plant2.jpg")}
+        source={require("../../assets/logo.png")}
         style={styles.profilePicture}
       />
       <View style={styles.textContainer}>
@@ -55,7 +55,6 @@ export function ProfileScreen({ navigation: { navigate } }: Props) {
         pressableStyle={{ marginTop: heightPixel(100) }}
         onPress={() => {
           logoutUser();
-          console.log("SESSION PROFILE: ", session.status);
         }}
       >
         Salir

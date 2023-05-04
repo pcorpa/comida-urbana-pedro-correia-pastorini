@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  PressableProps,
-} from "react-native";
-import React from "react";
+import { Text, Pressable, StyleSheet, PressableProps } from "react-native";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 import { COLORS } from "../constants";
 

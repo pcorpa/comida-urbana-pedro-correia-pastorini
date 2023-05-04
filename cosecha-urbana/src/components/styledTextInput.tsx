@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TextInputProps,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, TextInputProps, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import { fontPixel, heightPixel, widthPixel } from "../utils/normalize";
 import { COLORS } from "../constants/index";

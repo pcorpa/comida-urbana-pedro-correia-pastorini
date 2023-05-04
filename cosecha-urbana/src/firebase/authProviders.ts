@@ -1,11 +1,8 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { FirebaseAuth, FirebaseDB } from "./config";
-import { DocumentData, collection, doc, setDoc } from "firebase/firestore/lite";
-import { useState } from "react";
+import { FirebaseAuth } from "./config";
 
 interface CreateWithEmailProps {
   name: string;
@@ -30,7 +27,6 @@ export const createUserWithEmailPassword = async ({
     const { uid, email: emailFromFirebase } = (await response).user;
 
     return await { ok: true, uid, emailFromFirebase };
-    //return await { ok: true, user };
   } catch (error) {
     return {
       ok: false,

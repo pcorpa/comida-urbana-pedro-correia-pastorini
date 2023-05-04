@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { loginStyles } from "../constants/styles";
 export const errorMessage = (
   message:

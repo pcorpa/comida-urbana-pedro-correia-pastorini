@@ -1,18 +1,7 @@
-import {
-  CollectionReference,
-  DocumentData,
-  QueryDocumentSnapshot,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "./config";
 import { type Plant } from "../redux/slices/plantSlice";
 import { getAuth } from "firebase/auth";
-import { useState } from "react";
-import { limit, query } from "firebase/firestore";
 
 export const plantsCollection = collection(FirebaseDB, "/plants");
 
@@ -53,11 +42,9 @@ export const loadSingleUserPlant = async (id: string) => {
     if (doc.exists()) {
       const { name } = doc.data;
 
-      console.log(await doc.data);
       return await { ok: true, doc };
     }
   } catch (error) {
-    console.log("ERROR", error);
     return { ok: false, error };
   }
 };
@@ -77,7 +64,6 @@ export const loadAllPlants = async () => {
     });
     return { ok: true, plants };
   } catch (error) {
-    console.log("ERROR", error);
     return { ok: false, error };
   }
 };
